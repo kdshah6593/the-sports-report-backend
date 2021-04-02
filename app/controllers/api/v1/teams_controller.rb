@@ -1,5 +1,5 @@
 class Api::V1::TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :update, :destroy]
+  # before_action will need current user
 
   # GET /teams
   def index
@@ -13,7 +13,7 @@ class Api::V1::TeamsController < ApplicationController
     render json: TeamSerializer.new(@team)
   end
 
-  # POST /teams
+  # POST /teams #this should use the current user build association to make new teams
   def create
     @team = Team.new(team_params)
 
@@ -33,17 +33,12 @@ class Api::V1::TeamsController < ApplicationController
     end
   end
 
-  # DELETE /teams/1
-  def destroy
-    @team.destroy
-  end
+  # # DELETE /teams/1
+  # def destroy
+  #   @team.destroy
+  # end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_team
-      @team = Team.find(params[:id])
-    end
-
     # Only allow a list of trusted parameters through.
     def team_params
       params.require(:team).permit(:name, :sport, :sportsDBId)
