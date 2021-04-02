@@ -10,7 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_01_224537) do
+ActiveRecord::Schema.define(version: 2021_04_02_011143) do
+
+  create_table "players", force: :cascade do |t|
+    t.string "name"
+    t.string "sport"
+    t.string "team"
+    t.string "sportsDBId"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string "name"
+    t.string "sport"
+    t.string "sportsDBId"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "user_players", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "player_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["player_id"], name: "index_user_players_on_player_id"
+    t.index ["user_id"], name: "index_user_players_on_user_id"
+  end
+
+  create_table "user_teams", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "team_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_id"], name: "index_user_teams_on_team_id"
+    t.index ["user_id"], name: "index_user_teams_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
@@ -22,4 +57,8 @@ ActiveRecord::Schema.define(version: 2021_04_01_224537) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "user_players", "players"
+  add_foreign_key "user_players", "users"
+  add_foreign_key "user_teams", "teams"
+  add_foreign_key "user_teams", "users"
 end

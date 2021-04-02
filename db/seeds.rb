@@ -7,5 +7,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.destroy_all
+Player.destroy_all
+Team.destroy_all
+
 
 kunal = User.create(username: 'kunals', password: 'password', email: 'kunals@email.com', first_name: 'Kunal', last_name: 'Shah')
+
+kunal.players.create(name: "Danny Welbeck", sport: 'Soccer', team: "Brighton", sportsDBId: "34145395")
+
+kunal.teams.create(name: "Arsenal", sport: "Soccer", sportsDBId: "133604")
