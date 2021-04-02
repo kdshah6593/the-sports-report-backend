@@ -4,13 +4,13 @@ class Api::V1::TeamsController < ApplicationController
   # GET /teams
   def index
     @teams = Team.all
-
-    render json: @teams
+    render json: TeamSerializer.new(@teams)
   end
 
   # GET /teams/1
   def show
-    render json: @team
+    @team = Team.find_by(id: params[:id])
+    render json: TeamSerializer.new(@team)
   end
 
   # POST /teams

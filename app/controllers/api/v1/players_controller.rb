@@ -4,8 +4,7 @@ class Api::V1::PlayersController < ApplicationController
   # GET /players
   def index
     @players = Player.all
-
-    render json: @players
+    render json: PlayerSerializer.new(@players)
   end
 
   # GET /players/1
