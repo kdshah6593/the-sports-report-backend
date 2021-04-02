@@ -1,11 +1,10 @@
 class Api::V1::PlayersController < ApplicationController
-  before_action :set_player, only: [:show, :update, :destroy]
+  # before_action will need the current user one here
 
   # GET /players
   def index
     @players = Player.all
-
-    render json: @players
+    render json: PlayerSerializer.new(@players)
   end
 
   # GET /players/1
@@ -13,7 +12,7 @@ class Api::V1::PlayersController < ApplicationController
     render json: @player
   end
 
-  # POST /players
+  # POST /players #this should use the current user build association to make new players
   def create
     @player = Player.new(player_params)
 
@@ -33,17 +32,12 @@ class Api::V1::PlayersController < ApplicationController
     end
   end
 
-  # DELETE /players/1
-  def destroy
-    @player.destroy
-  end
+  # # DELETE /players/1
+  # def destroy
+  #   @player.destroy
+  # end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_player
-      @player = Player.find(params[:id])
-    end
-
     # Only allow a list of trusted parameters through.
     def player_params
       params.require(:player).permit(:name, :sport, :team, :sportsDBId)
