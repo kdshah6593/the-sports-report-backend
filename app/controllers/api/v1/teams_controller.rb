@@ -1,4 +1,5 @@
 class Api::V1::TeamsController < ApplicationController
+  skip_before_action :authorized
   before_action :current_user
 
   # GET /teams
@@ -20,20 +21,6 @@ class Api::V1::TeamsController < ApplicationController
     current_user.teams.push(team)
     render json: UserSerializer.new(current_user)
   end
-
-  # # PATCH/PUT /teams/1
-  # def update
-  #   if @team.update(team_params)
-  #     render json: @team
-  #   else
-  #     render json: @team.errors, status: :unprocessable_entity
-  #   end
-  # end
-
-  # # DELETE /teams/1
-  # def destroy
-  #   @team.destroy
-  # end
 
   private
     # Only allow a list of trusted parameters through.

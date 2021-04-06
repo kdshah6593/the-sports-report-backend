@@ -1,4 +1,5 @@
 class Api::V1::PlayersController < ApplicationController
+  skip_before_action :authorized
   before_action :current_user
 
   # GET /players
@@ -19,20 +20,6 @@ class Api::V1::PlayersController < ApplicationController
     current_user.players.push(player)
     render json: UserSerializer.new(current_user)
   end
-
-  # PATCH/PUT /players/1
-  # def update
-  #   if @player.update(player_params)
-  #     render json: @player
-  #   else
-  #     render json: @player.errors, status: :unprocessable_entity
-  #   end
-  # end
-
-  # # DELETE /players/1
-  # def destroy
-  #   @player.destroy
-  # end
 
   private
     # Only allow a list of trusted parameters through.
