@@ -5,4 +5,13 @@ class User < ApplicationRecord
     has_many :user_teams, dependent: :destroy
     has_many :teams, through: :user_teams
 
+    validates :username, presence: true
+    validates :username, uniqueness: true
+    validates :password, presence: true
+    validates :password, length: { in: 6..20 }, on: :create
+    validates :email, presence: true
+    validates :email, uniqueness: true
+    validates :first_name, presence: true
+    validates :last_name, presence: true
+
 end
