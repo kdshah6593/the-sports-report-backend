@@ -1,11 +1,40 @@
 class ApplicationController < ActionController::API
+    before_action :authorized
 
+    JWT_SECRET = Rails.application.secrets.secret_key_base.to_s
+
+    def encode_token(payload)
+        JWT.encode(payload, JWT_SECRET)
+    end
+
+    def auth_header # {Authorization: 'Bearer <token>'}
+        request.headers['Authorization']
+    end
+    
+    def decoded_token
+        if auth_header
+            token = auth_header.split(' ')[1]
+            begin
+                JWT.decode(token, JWT_SECRET, true, algorithm: 'HS256')
+            rescue JWT::DecodeError
+                nil
+            end
+        end
+    end
+    
     #temporary hard code current user for front end; this will change when JWT AUTH is added
     def current_user
-        User.first
+        if decoded_token
+            user_id = decoded_token[0]['user_id']
+            @user = User.find_by(id: user_id)
+        end
     end
 
     def logged_in?
         !!current_user
+    end
+
+    def authorized
+        render json: { message: 'Please log in' }, status: :unauthorized unless logged_in?
     end
 end
