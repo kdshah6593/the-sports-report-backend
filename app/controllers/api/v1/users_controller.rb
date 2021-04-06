@@ -14,7 +14,7 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     @user = User.create(user_params)
-
+    
     if @user.valid?
       @token = encode_token(user_id: @user.id)
       render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created
@@ -31,6 +31,6 @@ class Api::V1::UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username, :password_digest, :email, :first_name, :last_name)
+      params.require(:user).permit(:username, :password, :email, :first_name, :last_name)
     end
 end
