@@ -22,6 +22,12 @@ class Api::V1::TeamsController < ApplicationController
     render json: UserSerializer.new(current_user)
   end
 
+  def destroy
+    team = Team.find_by(sportsDBId: team_params["sportsDBId"])
+    current_user.teams.delete(team)
+    render json: UserSerializer.new(current_user)
+  end
+
   private
     # Only allow a list of trusted parameters through.
     def team_params
