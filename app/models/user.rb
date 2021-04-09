@@ -11,6 +11,7 @@ class User < ApplicationRecord
     validates :password, length: { in: 6..20 }, on: :create
     validates :email, presence: true
     validates :email, uniqueness: true
+    validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: 'requires a valid email format'}
     validates :first_name, presence: true
     validates :last_name, presence: true
 
