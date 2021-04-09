@@ -1,5 +1,4 @@
 class Api::V1::TeamsController < ApplicationController
-  skip_before_action :authorized
   before_action :current_user
 
   # GET /teams
