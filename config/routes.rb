@@ -2,9 +2,9 @@ Rails.application.routes.draw do
   
   namespace :api do
     namespace :v1 do
-      resources :users
-      resources :teams
-      resources :players
+      resources :users, only: [:index, :show, :create]
+      resources :teams, only: [:index, :show, :create, :destroy]
+      resources :players, only: [:index, :show, :create, :destroy]
       post '/login', to: 'auth#create'
     end
   end
